@@ -6,7 +6,9 @@ class ConfigData:
 class Config:
     def __init__(self, configpath):
         self.config = ConfigParser.ConfigParser()
-        self.config.readfp((open(configpath)))
+        
+        if( os.path.isfile(configpath) == True ):
+            self.config.readfp((open(configpath)))
         
         self.path  = ""
         self.configlist = []
