@@ -37,8 +37,11 @@ class Client(Connector):
         self.nick = nickname
         self.realname = realname
         self.email = email
+        #self.server = server
+        #self.port = port
+        Connector.__init__(self, server, port)
         
-        super(server,port )
+        #super(Client, self).__init__(server,port)
         
     
     def SendMessage(self, message):

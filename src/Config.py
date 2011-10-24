@@ -1,9 +1,9 @@
 import ConfigParser, os
 
-class ConfigData:
+class ConfigData(object):
     pass
 
-class Config:
+class Config(object):
     def __init__(self, configpath):
         self.config = ConfigParser.ConfigParser()
         
@@ -15,27 +15,39 @@ class Config:
         self.raw =  ConfigParser.RawConfigParser()
         
         
-        def Get(self,section, name):
+    def Get(self,section, name):
             return self.config.get(section, name)
         
-        def AddSection(self, section):
+    def GetInt(self, section, name):
+            return self.config.getint(section,name)
+        
+    def GetFloat(self, section,name):
+            return self.config.getfloat(section, name)
+        
+    def AddSection(self, section):
             self.raw.add_section(section)
            
             
-        def AddOption(self, section,option,value):
+    def AddOption(self, section,option,value):
             self.raw.set(section,option,value)
             self.configlist += [[
                                  (section,option, value)
                                  ]]
             
             
-        def Write(self, filename):
+    def Write(self, filename):
             
             with open(filename, "w") as configstream:
             
                 #for i in range(len(self.configlist)):
                 self.config.write(configstream)
                 
+                
+        
+            
+           
+                
+                            
             
             
        
