@@ -55,7 +55,7 @@ class Client(Connector):
         
         if self.isConnected:
             if message.find("PING") != -1:
-                self.SendMessage("PONG" +  message.split()[1])
+                self.SendMessage("PONG " +  message.split()[1])
         else:
             sys.stderr << "Ping not send"
                 
@@ -65,11 +65,11 @@ class Client(Connector):
         if( self.isConnected):
            
             self.SendMessage('NICK ' + self.nick )
-            newuser = ""
-            newuser.format("USER %s %s :bla  %s", self.ident, self.server, self.realname)   
+            
+            user = 'USER {0} {1} :bla  {2}'.format(self.ident, self.server, self.realname)   
             
             
-            self.SendMessage(newuser)
+            self.SendMessage(user)
             
         else:
             sys.stderr << "Cannot create a new identity f you are disconnectd"
@@ -85,9 +85,9 @@ class Client(Connector):
         tmpmsg = ""
         
         if user == None:
-            tmpmsg.format("PRIVMSG %s :%s ", channel, message)
+            tmpmsg  = "PRIVMSG {0} :{1} ".format(channel, message)
         else:
-            tmpmsg.format("PRIVMSG %s :%s", user, message)
+            tmpmsg  = "PRIVMSG {0} :{1} ".format(user, message)
             
             
             if (self.isConnected):
@@ -98,8 +98,13 @@ class Client(Connector):
             if( self.isConnected):
                 tmp = ""
                 
-                tmp.format("PRIVMSG %s :%s", channel, message )
+                #tmp.format("PRIVMSG %s :%s", channel, message )
+                tmp  = "PRIVMSG {0} :{1} ".format(channel, message)
                 self.SendMessage(tmp)
+                
+    def ChangeNick(self, oldname, newname):        
+        temp = ":{0} NICK {1}".format(oldname,newname)
+        self.SendMessage(temp)
                 
                 
         
