@@ -1,9 +1,13 @@
 from src import Config
-import os
 
+import os, sys, imp
+from modules import *
 
 class ModuleClass:
-    pass
+    def __init__(self,  ircprotocol):
+        self.irc = ircprotocol
+        
+        
 
 
 class Module(object):
@@ -13,33 +17,30 @@ class Module(object):
         self.modulelist = []
         self.moduleInstance = []
         
-    def ReadList(self):
+    def ReadList(self, ircclass):
         
-        getlist = ""
+        mlist = self.conf.Get("modules", "modules")
+        aux =  mlist.split(',')
         
-        getlist = self.conf.Get("modules", "modules")
         
-        if (getlist == None):
-            return 0
-        
-        list = getlist.split(",")
-        
-        for i in range(len(list)):
-            self.modulelist.append(list[i])
-            
+        for i in range ( len(mlist) ):
+            aux.append(aux[i])
+                      
             try:
-                self.moduleInstance[i] = __import__(list[i])
-                print "Modules Loaded: {0} ".format(list[i])
-                break
-            except  Exception:
-                print "Error on load Module: [ {0} ]".format(list[i])
-                  
+                self.moduleInstance[i] = __import__("modules.{0}".format(aux[i]))
+                 
+            except Exception as (e):
+                print "Error: {0}".format(e)
+                
         
+               
+     
+             
         
-        def  InitPlugins(self):
+    def  InitPlugins(self, ircclass):
             
             for i in range(len(self.moduleInstance)):
-                self.moduleInstance[i].__init__()
+                self.moduleInstance[i].__init__(ircclass)
         
         
         

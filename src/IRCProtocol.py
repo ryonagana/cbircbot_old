@@ -105,6 +105,8 @@ class Client(Connector):
     def ChangeNick(self, oldname, newname):        
         temp = ":{0} NICK {1}".format(oldname,newname)
         self.SendMessage(temp)
+        
+    
                 
                 
         

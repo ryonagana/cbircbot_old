@@ -2,6 +2,9 @@
 import Config
 import IRCProtocol
 import Module
+import modules
+
+
 
 #main entrypoint
 
@@ -23,6 +26,7 @@ def main():
     
     
     
+    
     if( data.needidentify == True and  data.needidentify != None  ):
         data.userpass = conf.Get("config", "password")
     else:
@@ -36,7 +40,7 @@ def main():
     c = IRCProtocol.Client(data.server, data.port, data.nick, data.realname, data.email, data.ident)
     mod = Module.Module("config.cfg", "modules")
     
-    mod.ReadList()
+    mod.ReadList(c)
     
 
     
