@@ -8,34 +8,20 @@ import urllib2
 from xml.dom import minidom, Node
 import xml.dom
 
-class MyClass(object):
-    '''
-    classdocs
-    '''
-
+class RSSFeeder(object):
 
     def __init__(self):
         self.urlobject = None
         self.dom = None
         self.rootnode = None
         
-        
-        '''
-        Constructor
-        '''
+
     def OpenURL(self, url):
         self.urlobject = urllib2.urlopen(url)
         self.dom  =  minidom.parse(self.urlobject)
         self.rootnode = self.dom.documentElement
         
-    def ParseXML(self, nodename ):
-        
-        for node in  self.rootnode.childNodes:
-                
-                if(node.nodeName == nodename):
-                    if node.nodeType == node.TEXT_NODE:
-                        
-                    
+
                 
         
         

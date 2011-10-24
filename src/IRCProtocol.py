@@ -56,6 +56,7 @@ class Client(Connector):
         if self.isConnected:
             if message.find("PING") != -1:
                 self.SendMessage("PONG " +  message.split()[1])
+                print "PONG'd  {0} ".format(message.split()[1])
         else:
             sys.stderr << "Ping not send"
                 
