@@ -1,6 +1,7 @@
 
 import Config
 import IRCProtocol
+import Module
 
 #main entrypoint
 
@@ -31,7 +32,13 @@ def main():
     
     
     
+    
     c = IRCProtocol.Client(data.server, data.port, data.nick, data.realname, data.email, data.ident)
+    mod = Module.Module("config.cfg", "modules")
+    
+    mod.ReadList()
+    
+
     
     c.Connect()
     
