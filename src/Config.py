@@ -24,6 +24,9 @@ class Config(object):
     def GetFloat(self, section,name):
             return self.config.getfloat(section, name)
         
+    def GetBool(self, section,name):
+        return self.config.getboolean(section, name)
+        
     def AddSection(self, section):
             self.raw.add_section(section)
            

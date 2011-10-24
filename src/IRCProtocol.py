@@ -32,11 +32,12 @@ class Connector:
 #CLIENT CLASS
 
 class Client(Connector):
-    def __init__(self, server, port, nickname, realname, email ):
+    def __init__(self, server, port, nickname, realname, email, ident ):
         
         self.nick = nickname
         self.realname = realname
         self.email = email
+        self.ident = ident
         #self.server = server
         #self.port = port
         Connector.__init__(self, server, port)
@@ -62,10 +63,14 @@ class Client(Connector):
     def CreateIdentity(self):
         
         if( self.isConnected):
+           
             self.SendMessage('NICK ' + self.nick )
             newuser = ""
-            newuser.format("USER %s %s %s :%s", self.nick, self.realname, self.email, "python IRCBOT v.0.1" )   
+            newuser.format("USER %s %s :bla  %s", self.ident, self.server, self.realname)   
+            
+            
             self.SendMessage(newuser)
+            
         else:
             sys.stderr << "Cannot create a new identity f you are disconnectd"
     
