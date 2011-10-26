@@ -8,8 +8,6 @@ import modules
 
 #main entrypoint
 
-import thread
-
 
 
 def main():
