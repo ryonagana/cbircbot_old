@@ -8,6 +8,10 @@ import modules
 
 #main entrypoint
 
+import thread
+
+
+
 def main():
     print "[CB-BOT by ryonagana] (for learning purposes):"
     
@@ -51,18 +55,20 @@ def main():
     
     
     
-    data = ""
+    botmessage = ""
+    
+    c.startUserInputThread(data)
    
     
     while True:
         server = []
         
-        data =  c.SocketObject().recv(1024)
-        c.CheckPing(data)
-        server.append(data)
+        botmessage =  c.SocketObject().recv(1024)
+        c.CheckPing(botmessage)
+        server.append(botmessage)
         
         print server[0]
-        data = None
+        botmessage = None
         del server
         
         

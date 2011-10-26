@@ -1,11 +1,16 @@
 from socket import socket, AF_INET, SOCK_STREAM, SHUT_WR
-import sys
-#connector deal with sockes
+import sys, thread
+#connector deal with sockets
+
+
+
+
 class Connector:
     def __init__(self, server,port):
         self.socket  = socket(AF_INET, SOCK_STREAM)
         self.server = server
         self.port = port
+        
         
         self.isConnected = False
         
@@ -38,6 +43,8 @@ class Client(Connector):
         self.realname = realname
         self.email = email
         self.ident = ident
+        self.isJoined = False
+       
         #self.server = server
         #self.port = port
         Connector.__init__(self, server, port)
@@ -106,6 +113,24 @@ class Client(Connector):
     def ChangeNick(self, oldname, newname):        
         temp = ":{0} NICK {1}".format(oldname,newname)
         self.SendMessage(temp)
+        
+    
+    def GenericMessage(self, dest, messagetype, message):
+        
+        parse = "{0} {1} :{2}".format(dest,messagetype, message)
+        self.SendMessage(parse)
+        
+        
+    def  UserInput(self, configdata):
+        while True:
+            texto = raw_input('BOT Command: ')
+            if (texto.find):
+                self.GenericMessage('PRIVMSG', configdata.channel , texto)
+                print "<{0}> {1} ".format(configdata.nick, texto)
+            
+    
+    def startUserInputThread(self, configdata):        
+        thread.start_new_thread( self.UserInput,(configdata,))
         
     
                 
