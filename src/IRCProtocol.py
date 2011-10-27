@@ -1,5 +1,5 @@
 from socket import socket, AF_INET, SOCK_STREAM, SHUT_WR
-import sys, thread
+import sys, thread, time
 #connector deal with sockets
 
 
@@ -44,13 +44,16 @@ class Client(Connector):
         self.email = email
         self.ident = ident
         self.isJoined = False
-       
+        self.clientconf = None
         #self.server = server
         #self.port = port
         Connector.__init__(self, server, port)
         
         #super(Client, self).__init__(server,port)
         
+    def AssignConfig(self, config):
+        self.clientconf = config
+    
     
     def SendMessage(self, message):
         
@@ -125,12 +128,34 @@ class Client(Connector):
         while True:
             texto = raw_input('BOT Command: ')
             if (texto.find):
+                
+                parse =  texto.split(" ")
+                
                 self.GenericMessage('PRIVMSG', configdata.channel , texto)
                 print "<{0}> {1} ".format(configdata.nick, texto)
+                
             
     
     def startUserInputThread(self, configdata):        
         thread.start_new_thread( self.UserInput,(configdata,))
+        
+    def Timeout(self,seconds):
+        
+        
+        while True:
+        
+            test = self.socket.recv(1024)
+        
+            if( test == None):
+                print "Connection Timeout in ({0}) seconds".format(seconds)
+                return
+            time.sleep(seconds)
+            
+    def StartTimeoutThread (self, secs):
+        
+        thread.start_new(self.Timeout,(secs,))
+        
+        
         
     
                 

@@ -39,10 +39,18 @@ def main():
     
     
     
+    conf.AssignClientData(data)
+    
+    
     c = IRCProtocol.Client(data.server, data.port, data.nick, data.realname, data.email, data.ident)
+    
+    c.AssignConfig(conf)
+    
     mod = Module.Module("config.cfg", "modules")
     
-    mod.ReadList(c)
+    mod.ReadAllModules()
+    
+    #mod.ReadList(c)
     
 
     
@@ -56,6 +64,7 @@ def main():
     botmessage = ""
     
     c.startUserInputThread(data)
+    c.StartTimeoutThread(30)
    
     
     while True:

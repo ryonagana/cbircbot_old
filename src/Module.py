@@ -10,37 +10,37 @@ class ModuleClass:
         
 
 
-class Module(object):
+class Module(ModuleClass):
     def __init__(self, config, folder):
         self.conf = Config.Config(config)
         self.folder = os.path.basename(folder)
         self.modulelist = []
-        self.moduleInstance = []
+        self.moduleInstance = dict()
         
-    def ReadList(self, ircclass):
+    def AddModule(self, cmd, func ):
         
-        mlist = self.conf.Get("modules", "modules")
-        aux =  mlist.split(',')
+        try:
+            self.moduleInstance[cmd] =  func
+        except Exception as e:
+            print "Module Invalid {0}".format(e)
+    
+    def ReadAllModules(self):
         
+        getmodules = self.conf.Get("modules","modules")
+        modules = getmodules.split('",')
         
-        for i in range ( len(mlist) ):
-            aux.append(aux[i])
-                      
-            try:
-                self.moduleInstance[i] = __import__("modules.{0}".format(aux[i]))
-                 
-            except Exception as (e):
-                print "Error: {0}".format(e)
-                
-        
-               
-     
-             
-        
-    def  InitPlugins(self, ircclass):
+        for i in range( len(modules)):
             
-            for i in range(len(self.moduleInstance)):
-                self.moduleInstance[i].__init__(ircclass)
+            try:
+                self.AddModule(modules[i], __import__("modules." + modules[i]))
+                self.moduleInstance[i].__init__(self.irc)
+            except Exception as e:
+                print "Cannot Create Module:{0}".format(e)
+        
+      
+            
+            
+            
         
         
         

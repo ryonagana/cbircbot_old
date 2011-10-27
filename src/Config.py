@@ -13,6 +13,7 @@ class Config(object):
         self.path  = ""
         self.configlist = []
         self.raw =  ConfigParser.RawConfigParser()
+        self.clientdata = None
         
         
     def Get(self,section, name):
@@ -44,6 +45,9 @@ class Config(object):
             
                 #for i in range(len(self.configlist)):
                 self.config.write(configstream)
+                
+    def AssignClientData(self, data):
+        self.clientdata = data
                 
                 
         

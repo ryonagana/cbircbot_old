@@ -1,6 +1,5 @@
-import src.IRCProtocol
+from src.Module import *
 
-class Teste:
-    def __init__(self, ircprotocol):
-        self.ircprotocol = ircprotocol
-        print "Plugin Teste foi um Sucesso"
+class Teste(ModuleClass):
+    def __init__(self):
+        self.irc.TalkOnChannel(self.irc.clientconf.channel, "Ola")
