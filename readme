@@ -1,0 +1,30 @@
+cbIRCBot - a simplebot made with python
+    Copyright (C) 2011  ryonagana
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+	
+	
+============ BRIEF ===========================================================
+cbIRCBot - By ryonagana and ctx
+collab: AllessonZaire
+
+a simple python bot you can execute directly using python or compile to exe (windows) and distribute for yor friends
+please modify the  config.cfg file to your own configuaration
+
+IMPORTANT:
+if you compile to .exe  make a copy of config.cfg and paste on the same directory where  the executable
+
+
+Next Implementation: a dynamic command parser where anyone can add and remove new funcionalities of the program
+
