@@ -1,7 +1,6 @@
 from src import Config
 
-import os, sys, imp
-from modules import *
+import os
 
 class ModuleClass:
     def __init__(self,  ircprotocol):

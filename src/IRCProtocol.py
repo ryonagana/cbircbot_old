@@ -129,7 +129,7 @@ class Client(Connector):
             texto = raw_input('BOT Command: ')
             if (texto.find):
                 
-                parse =  texto.split(" ")
+                #parse =  texto.split(" ")
                 
                 self.GenericMessage('PRIVMSG', configdata.channel , texto)
                 print "<{0}> {1} ".format(configdata.nick, texto)
