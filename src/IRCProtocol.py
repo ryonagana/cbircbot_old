@@ -1,7 +1,7 @@
 from socket import socket, AF_INET, SOCK_STREAM, SHUT_WR
 import sys, thread, time
 #connector deal with sockets
-
+import Commands
 
 
 
@@ -45,6 +45,7 @@ class Client(Connector):
         self.ident = ident
         self.isJoined = False
         self.clientconf = None
+        self.command = Commands.CommandList(self)
         #self.server = server
         #self.port = port
         Connector.__init__(self, server, port)
@@ -131,7 +132,8 @@ class Client(Connector):
                 
                 #parse =  texto.split(" ")
                 
-                self.GenericMessage('PRIVMSG', configdata.channel , texto)
+                #self.command.CommandParser(texto)
+                #self.GenericMessage('PRIVMSG', configdata.channel , texto)
                 print "<{0}> {1} ".format(configdata.nick, texto)
                 
             
@@ -148,8 +150,11 @@ class Client(Connector):
         
             if( test == None):
                 print "Connection Timeout in ({0}) seconds".format(seconds)
-                return
+                self.socket.close()
+                sys.exit()
             time.sleep(seconds)
+                
+            
             
     def StartTimeoutThread (self, secs):
         

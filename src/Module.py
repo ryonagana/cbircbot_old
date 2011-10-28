@@ -1,5 +1,6 @@
 from src import Config
 
+
 import os
 
 class ModuleClass:
@@ -26,12 +27,12 @@ class Module(ModuleClass):
     def ReadAllModules(self):
         
         getmodules = self.conf.Get("modules","modules")
-        modules = getmodules.split('",')
+        modules = getmodules.split(",")
         
         for i in range( len(modules)):
             
             try:
-                self.AddModule(modules[i], __import__("modules." + modules[i]))
+                self.AddModule(modules[i], __import__(modules[i]))
                 self.moduleInstance[i].__init__(self.irc)
             except Exception as e:
                 print "Cannot Create Module:{0}".format(e)

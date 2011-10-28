@@ -9,6 +9,7 @@ Created on 28/10/2011
 import Config
 import IRCProtocol
 import Module
+import Commands
 
 
 class App(object):
@@ -45,7 +46,8 @@ class App(object):
     
     
         self.c = IRCProtocol.Client(self.data.server, self.data.port, self.data.nick, self.data.realname, self.data.email, self.data.ident)
-    
+        self.cmd = Commands.CommandList(self.c)
+        
         self.c.AssignConfig(self.conf)
     
         self.mod = Module.Module("config.cfg", "modules")
@@ -73,8 +75,11 @@ class App(object):
             server = []
         
             self.botmessage =  self.c.SocketObject().recv(1024)
-            self.c.CheckPing(self.botmessage)
             server.append(self.botmessage)
+            self.c.CheckPing(server[0])
+           
+            self.cmd.CommandParser(self.botmessage )
+            #self.c.
         
             print server[0]
             self.botmessage = None
