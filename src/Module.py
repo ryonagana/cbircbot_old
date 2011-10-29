@@ -1,4 +1,4 @@
-from src import Config
+import Config
 
 
 import os
