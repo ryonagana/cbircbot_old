@@ -17,7 +17,7 @@ cbIRCBot - a simplebot made with python
 	
 ============ BRIEF ===========================================================
 cbIRCBot - By ryonagana and ctx
-collab: AllessonZaire
+collab: AlessonZaire
 
 a simple python bot you can execute directly using python or compile to exe (windows) and distribute for yor friends
 please modify the  config.cfg file to your own configuaration
@@ -26,8 +26,8 @@ IMPORTANT:
 
 if you want to compile to exe you need to install py2exe-0.6.9-py2.7.exe  --  http://sourceforge.net/projects/py2exe/files/py2exe/0.6.9/py2exe-0.6.9.win32-py2.7.exe/download
 
-if you compile to .exe  make a copy of config.cfg and paste on the same directory where  the executable
+if you compile to .exe  make a copy of config.cfg and paste on the same directory where  the executable then run it
 
 
-Next Implementation: a dynamic command parser where anyone can add and remove new funcionalities of the program
+Next Implementation: a dynamic command parser where anyone can add and remove new features of the program
 
