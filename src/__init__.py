@@ -1,7 +1,7 @@
 
 import App
 import sys, imp,os
-import modules
+#import modules
 
 #main entrypoint
 
