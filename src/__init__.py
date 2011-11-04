@@ -1,4 +1,3 @@
-
 import App
 import sys, imp,os
 #import modules
@@ -8,10 +7,9 @@ import sys, imp,os
 
 
 def main():
-    print "[CB-BOT by ryonagana] (for learning purposes):"
-    
+     
 
-   
+     
     bot = App.App()
     bot.Start()
         
@@ -20,4 +18,4 @@ def main():
     
     
 if __name__ == "__main__":
-     main()
+    main()

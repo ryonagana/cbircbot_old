@@ -3,7 +3,7 @@ Created on 28/10/2011
 
 @author: Nicholas
 '''
-import IRCProtocol
+
 
 class CommandType:
     pass
@@ -13,16 +13,17 @@ class CommandType:
 cmdType = CommandType()
 cmdType.SERVER = 1
 cmdType.CLIENT = 2
-cmdType.INVALID = 0 
+cmdType.INVALID = 0
 
 
 class CommandBase(object):
-    def  __init__(self, name, func_class, typecmd, ircprotocol ):
+    def  __init__(self, name, func_class, typecmd, ircprotocol, acceptParams ):
         self.command = name
-        self.args =  None
         self.func = func_class
         self.type = typecmd
         self.irc = ircprotocol
+        self.AcceptParams = acceptParams
+    
     
     def Execute(self):
         pass
@@ -33,61 +34,90 @@ class CommandList(object):
         self.cmdlist = []
         
         self.cmdlist.append(CommandTeste(irc))
+        self.cmdlist.append(CommandXinga(irc))
+        self.irc = irc
+        
         
         
     def CommandParser(self, command):
         
         '''
-            if( command.find("!") != -1 ):
-                separate  = command.split("!")
+        if  command.find("!") !=  -1:
             
+            parser = command.split(":")
+            print(parser)
             
+            sender = parser[1].split("!")
+            args = parser[1].split(" ")            
             
-                for i in range(len(self.cmdlist)):
-                    if( self.cmdlist[i].command == command):
-                    
-                        parse = separate[1].split(" ")
-                    
-                        for j in range(len(parse)):
-                            self.cmdlist[j].args.append(parse[j])
-                    
-                        self.cmdlist[i].Execute()
-                    
-                    
-        '''
         
-        #texto = command.split(" ")
-        
-        #if (texto[3].find("!") != -1 ): # if message contains ! is a command!! (check only is a command) now we check if is a valid command
-        
-        '''if ( command.find("!") != -1 ):
-            parseCommand = texto[3].split(":")
+            for val in self.cmdlist:
                 
-                for i in range(len(self.cmdlist)):
-                    if (parseCommand == self.cmdlist[i].command):
+                if( parser[2].find("!") != -1):
+                    if( parser[2].strip() ==  val.command):
                         
-                        args = parseCommand.split(" ")
-                        
-                        for j in range (len(args)):
-                            self.cmdlist[i].args.append(args[j])
-                            
-                        self.cmdlist[i].Execute()
-                        
-        else:
-            print "Command Invalid"
+                       
+                        val.args = args
+                        val.sender = sender
+                        val.Execute()
+                    
+                        #val.Execute()
+                    
+'''
+        
+        
             
-        '''
-        #TESTS
-        message = command.split(":")
-        if message[1].find("!") != -1:
+        cmdparse = command.split(":") 
+        rawcmd = cmdparse[2].split(" ")[0]
+        
+        if( rawcmd.find("!") !=  -1 ):
+            
+            
+            sender = cmdparse[1].split("!")[0]
+            
+            args = rawcmd.split(" ")
+            command  = args[0]
             
             for val in self.cmdlist:
-                if( message[1] ==  val.command):
-                    print "Comando Existe"
-                else:
-                    print "Comando Nao existe"
+                
+                try:
+                    if(val.command.find(command)  ):
+                        if(val.AcceptParams == True):
+                            val.args = args
+                            val.sender = sender
+                            val.Execute()
+                            
+                        else:
+                            val.args = None
+                            val.sender = sender
+                            val.Execute()
+                      
+                            
+                            
+                except Exception  as e:
+                        print e
+        
+       
+        rawcmd = None
+        sender = None
+                        
+            
+                        
+                        
+                
+               
                 
                 
+                
+                    
+            
+                    
+                
+            
+        
+                 
+        
+        
                 
             
         
@@ -101,12 +131,30 @@ class CommandList(object):
 class CommandTeste(CommandBase):
     def __init__(self, irc):
         self.irc = irc
-        CommandBase.__init__(self, "!teste", self.Execute() , cmdType.CLIENT, irc )
+        self.args =  []
+        self.sender = ""
+        CommandBase.__init__(self, "!teste", self.Execute, cmdType.CLIENT, irc, True )
        
     def Execute(self):
-        print "hello World!"
+        print(self.args)
+        print(self.sender)
         #evia pro canal
        
-        self.irc.Talk("aaaaa", "#chapolin" )
+        self.irc.SendMessage("PRIVMSG #bittl :Ola Mundo")
+        
+
+
+class CommandXinga(CommandBase):
+    def __init__(self, irc):
+        self.irc = irc
+        CommandBase.__init__(self, "!xinga", self.Execute , cmdType.CLIENT, irc, False )
+       
+    def Execute(self):
+
+        #evia pro canal
+       
+        self.irc.SendMessage("PRIVMSG {0} :{1}".format(self.irc.clientconf.channel,  "Seu Bobo!"    )  )
         
         
+
+

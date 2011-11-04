@@ -45,16 +45,15 @@ class App(object):
         self.conf.AssignClientData(self.data)
     
     
-        self.c = IRCProtocol.Client(self.data.server, self.data.port, self.data.nick, self.data.realname, self.data.email, self.data.ident)
+        self.c = IRCProtocol.Client(self.data.server, self.data.port, self.data.nick, self.data.realname, self.data.email, self.data.ident, self.data )
         self.cmd = Commands.CommandList(self.c)
-        
-        self.c.AssignConfig(self.conf)
+
     
         self.mod = Module.Module("config.cfg", "modules")
     
-        self.mod.ReadAllModules()
+        #self.mod.ReadAllModules()
     
-    #mod.ReadList(c)
+        #mod.ReadList(c)
     
 
     

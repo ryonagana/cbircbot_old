@@ -37,23 +37,26 @@ class Connector:
 #CLIENT CLASS
 
 class Client(Connector):
-    def __init__(self, server, port, nickname, realname, email, ident ):
+    def __init__(self, server, port, nickname, realname, email, ident, clientconfig =  None ):
         
         self.nick = nickname
         self.realname = realname
         self.email = email
         self.ident = ident
         self.isJoined = False
-        self.clientconf = None
-        self.command = Commands.CommandList(self)
+        self.clientconf = clientconfig
+        
         #self.server = server
         #self.port = port
         Connector.__init__(self, server, port)
         
+        self.command = Commands.CommandList(self)
+        
         #super(Client, self).__init__(server,port)
         
     def AssignConfig(self, config):
-        self.clientconf = config
+        if( self.clientconf == None ):
+            self.clientconf = config
     
     
     def SendMessage(self, message):
@@ -127,13 +130,11 @@ class Client(Connector):
         
     def  UserInput(self, configdata):
         while True:
-            texto = raw_input('BOT Command: ')
+            texto = raw_input('BOT CMD >> ')
             if (texto.find):
                 
                 #parse =  texto.split(" ")
-                
-                #self.command.CommandParser(texto)
-                #self.GenericMessage('PRIVMSG', configdata.channel , texto)
+                self.GenericMessage('PRIVMSG', configdata.channel , texto)
                 print "<{0}> {1} ".format(configdata.nick, texto)
                 
             
