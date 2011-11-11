@@ -14,7 +14,13 @@ cbIRCBot - a simplebot made with python
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	
+
+PORTUGUESE (BR):
+	i'm working on that!
 	
+	
+ENGLISH:
+
 ============ BRIEF ===========================================================
 cbIRCBot - By ryonagana and ctx
 collab: AlessonZaire
@@ -22,9 +28,34 @@ collab: AlessonZaire
 a simple python bot you can execute directly using python or compile to exe (windows) and distribute for yor friends
 please modify the  config.cfg file to your own configuaration
 
+HOW TO USE:
+first you need to have python already installed i think it's secure use 2,4 version, but i'm using 2.7.2
+
+after you installed and setup
+
+LINUX:
+python __init__.py
+
+
+WINDOWS:
+
+Easy Mode:
+	install  py2exe library go to win32 folder and execute "create_executable.bat"
+	a bunch of letters will appear.. wait  until finish  
+	a "dist" folder will be created, then execute __init__.exe  (dont forget to put config.cfg on the dist folder)
+
+Hard Way:
+	go to my computer -> properties -> advanced -> Enviroment Variables
+	choose PATH  and after last ";" put your python complete path  (e.g: C:\Python21\python.exe)
+	go to Run and type "cmd" then 
+	go to ircbot directory and type: python __init__.py
+	
+	
+
 IMPORTANT:
 
 if you want to compile to exe you need to install py2exe-0.6.9-py2.7.exe  --  http://sourceforge.net/projects/py2exe/files/py2exe/0.6.9/py2exe-0.6.9.win32-py2.7.exe/download
+then you go to win32 folder and run create_executable.bat
 
 if you compile to .exe  make a copy of config.cfg and paste on the same directory where  the executable then run it
 

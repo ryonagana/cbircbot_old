@@ -8,9 +8,8 @@ Created on 28/10/2011
 
 import Config
 import IRCProtocol
-import Module
-import Commands
-
+import Modules
+import sys
 
 class App(object):
     '''
@@ -22,6 +21,7 @@ class App(object):
         
         self.conf = Config.Config("config.cfg")
         self.data = Config.ConfigData()
+        self.modulelist = None
         
         
         self.data.nick =  self.conf.Get("config", "nick")
@@ -33,6 +33,8 @@ class App(object):
         self.data.needidentify = self.conf.GetBool("config", "needIdentify")
         self.data.ident = self.conf.Get("config", "ident")
         
+        self.parsedata = []
+        
         
         if( self.data.needidentify == True and  self.data.needidentify != None  ):
             self.data.userpass = self.conf.Get("config", "password")
@@ -42,47 +44,55 @@ class App(object):
             print "[Warning:] Config.cfg: please clear line of your password if needIdentify is False"
         
         
+        
+        self.data.modules = self.conf.Get("modules", "modules")
+        
+        self.modules = Modules.Modules(self.data)
         self.conf.AssignClientData(self.data)
     
     
-        self.c = IRCProtocol.Client(self.data.server, self.data.port, self.data.nick, self.data.realname, self.data.email, self.data.ident, self.data )
-        self.cmd = Commands.CommandList(self.c)
+        self.irclient = IRCProtocol.Client(self.data.server, self.data.port, self.data.nick, self.data.realname, self.data.email, self.data.ident, self.data )
+        self.irclient.Connect()
+        self.irclient.CreateIdentity()
+        self.irclient.JoinChannel(self.data.channel)
+    
+    
+    
+        self.irclient.startUserInputThread(self.data)
+        self.irclient.StartTimeoutThread(30)
+        
+       
+        
+        
 
+        
+    def PrintMessage(self, message ):
+        print "Server: " + message;
+        
+    def ParsedMessage(self, message):
+        
+        tmp = message.split(":")
+        self.parsedata = tmp;
     
-        self.mod = Module.Module("config.cfg", "modules")
-    
-        #self.mod.ReadAllModules()
-    
-        #mod.ReadList(c)
-    
-
-    
-        self.c.Connect()
-    
-        self.c.CreateIdentity()
-        self.c.JoinChannel(self.data.channel)
-    
-    
-    
-        self.botmessage = ""
-    
-        self.c.startUserInputThread(self.data)
-        self.c.StartTimeoutThread(30)
+        
         
     def Start(self):
         while True:
-            server = []
-        
-            self.botmessage =  self.c.SocketObject().recv(1024)
-            server.append(self.botmessage)
-            self.c.CheckPing(server[0])
-           
-            self.cmd.CommandParser(self.botmessage )
-            #self.c.
-        
-            print server[0]
-            self.botmessage = None
-            del server
+            
+            try:
+                
+                server = self.irclient.socket.recv(1024);
+                self.irclient.CheckPing(server)
+                self.PrintMessage(server)
+                self.ParsedMessage(server)
+                
+                print self.parsedata
+                
+                del server
+                
+              
+            except KeyboardInterrupt:
+                sys.exit(0)
         
         
         

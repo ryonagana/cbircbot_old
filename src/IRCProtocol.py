@@ -1,7 +1,6 @@
 from socket import socket, AF_INET, SOCK_STREAM, SHUT_WR
 import sys, thread, time
 #connector deal with sockets
-import Commands
 
 
 
@@ -50,7 +49,7 @@ class Client(Connector):
         #self.port = port
         Connector.__init__(self, server, port)
         
-        self.command = Commands.CommandList(self)
+#        self.command = Commands.CommandList(self)
         
         #super(Client, self).__init__(server,port)
         
