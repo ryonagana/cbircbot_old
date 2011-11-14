@@ -141,6 +141,9 @@ class Client(Connector):
     def startUserInputThread(self, configdata):        
         thread.start_new_thread( self.UserInput,(configdata,))
         
+    def stopUserInputThread(self):
+        thread.exit()
+        
     def Timeout(self,seconds):
         
         

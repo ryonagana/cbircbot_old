@@ -40,7 +40,7 @@ class App(object):
             self.data.userpass = self.conf.Get("config", "password")
         else:
             self.data.userpass = self.conf.Get("config", "password")
-        if ( self.data.userpass != None):
+        if ( self.data.userpass != ""):
             print "[Warning:] Config.cfg: please clear line of your password if needIdentify is False"
         
         
@@ -57,9 +57,11 @@ class App(object):
         self.irclient.JoinChannel(self.data.channel)
     
     
-    
-        self.irclient.startUserInputThread(self.data)
-        self.irclient.StartTimeoutThread(30)
+        try:
+            self.irclient.startUserInputThread(self.data)
+            self.irclient.StartTimeoutThread(30)
+        except KeyboardInterrupt:
+            sys.exit()
         
        
         
@@ -92,6 +94,7 @@ class App(object):
                 
               
             except KeyboardInterrupt:
+                self.irclient.stopUserInputThread()
                 sys.exit(0)
         
         
