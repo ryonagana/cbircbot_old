@@ -6,6 +6,12 @@ Created on 11/11/2011
 
 import os, sys, imp
 
+
+class IModule:
+    pass
+
+
+
 class Modules(object):
 
     def __init__(self, config):
@@ -23,7 +29,7 @@ class Modules(object):
             print ".modules not found"
             exit(1)
         else:
-            print "Module Folder Found!!"
+            sys.path.append(os.getcwd())
             self.modulepath =  sys.path.append(os.path.abspath(" .modules"))
             
             
@@ -31,19 +37,34 @@ class Modules(object):
         
         
         for key in mlist:
-            try:
-                modulename = os.path.basename('key')
-                module = imp.load_source(key, modulename)
-                
-                
-                if(module != None ): 
-                    self.modules.append(module)
-                
-            except Exception as e:
-                print  "module  {0} not found [{1}]".format(key, e)
+            path = os.path.abspath(".modules/{0}.py".format(key)) 
+            inst = self.loadfile(key,path)
+            self.modules.append(inst)
             
             
-        
+    
+    ''' 
+    versao modificada  da: http://stackoverflow.com/questions/301134/dynamic-module-import-in-python
+    '''
+    
+    def loadfile(self, classname, filepath):
+        instance = None
+        expected_class = classname
+
+        mod_name,file_ext = os.path.splitext(os.path.split(filepath)[-1])
+
+        if file_ext.lower() == '.py':
+            py_mod = imp.load_source(mod_name, filepath)
+
+        elif file_ext.lower() == '.pyc':
+            py_mod = imp.load_compiled(mod_name, filepath)
+
+        if expected_class in dir(py_mod):
+            #instance = py_mod.__init__()
+            instance = py_mod.__init__("")
+            
+
+        return instance
        
         
         
