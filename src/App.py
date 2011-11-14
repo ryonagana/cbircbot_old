@@ -53,6 +53,7 @@ class App(object):
         ''' carrega a lista de modulos existente  '''
         self.data.modules = self.conf.Get("modules", "modules")
         self.modules = Modules.Modules(self.data)
+        #self.modules.executeModules()
         
         
         ''' passa as informacoes da config.cfg pra outras classes'''

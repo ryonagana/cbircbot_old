@@ -8,7 +8,11 @@ import os, sys, imp
 
 
 class IModule:
-    pass
+    def __init__(self):
+        pass
+        
+    def Execute(self):
+        pass
 
 
 
@@ -38,33 +42,33 @@ class Modules(object):
         
         for key in mlist:
             path = os.path.abspath(".modules/{0}.py".format(key)) 
-            inst = self.loadfile(key,path)
+            inst = self.loadfile(path)
             self.modules.append(inst)
-            
             
     
     ''' 
     versao modificada  da: http://stackoverflow.com/questions/301134/dynamic-module-import-in-python
     '''
     
-    def loadfile(self, classname, filepath):
-        instance = None
-        expected_class = classname
-
-        mod_name,file_ext = os.path.splitext(os.path.split(filepath)[-1])
-
-        if file_ext.lower() == '.py':
-            py_mod = imp.load_source(mod_name, filepath)
-
-        elif file_ext.lower() == '.pyc':
-            py_mod = imp.load_compiled(mod_name, filepath)
-
-        if expected_class in dir(py_mod):
-            #instance = py_mod.__init__()
-            instance = py_mod.__init__("")
+    def loadfile(self, filepath):
+        try:
+            module_dir, module_file = os.path.split(filepath)
+            module_name, module_ext = os.path.splitext(module_file)
+            module_fullpath = filepath
+            module_obj = None
+            save_cwd = os.getcwd()
+            os.chdir(module_dir)
+            module_obj =  imp.load_source(module_name, module_fullpath)
+            #module_obj = __import__(module_fullpath)
+            module_obj.__file__ = module_fullpath
+            globals()[module_name] = module_obj
+            os.chdir(save_cwd)
             
+        except:
+            raise ImportError
+        
+        return module_obj.__class__
 
-        return instance
        
         
         
