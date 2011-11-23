@@ -15,8 +15,9 @@ class TwitterAuth(object):
         
         
 class TwitterAPI(object):
-    def __init__(self, authclass):
+    def __init__(self,user, authclass):
         self.api = twitter.Api(authclass.consumer_key, authclass.consumer_secret, authclass.access_token, authclass.access_token_secret)
+        self.user = user;
         
         if( self.api.VerifyCredentials() != None ):
             self.friendlist = self.api.GetFriends()
@@ -36,6 +37,6 @@ class TwitterAPI(object):
         
         
         if( len(message) <= 140):
-            self.api.PostUpdates(message,args)
-            
+            #self.api.PostUpdates(message,args)
+            self.api.PostDirectMessage(self.user , message)
         
