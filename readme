@@ -1,3 +1,15 @@
+============== WARNING =================================================
+
+this is a  test version of bot may not work correctly
+
+Added: TwitterAPI
+Must Install 2 Dependencies
+
+Python-twitter API :  http://code.google.com/p/python-twitter/downloads/detail?name=python-twitter-0.8.2.tar.gz&can=2&q=
+
+oauth2: 			  https://github.com/simplegeo/python-oauth2
+
+=========================================================================
 cbIRCBot - a simplebot made with python
     Copyright (C) 2011  ryonagana
 

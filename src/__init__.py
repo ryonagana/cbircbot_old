@@ -9,8 +9,8 @@ def main():
      
 
      
-    #bot = App.App()
-    #bot.Start()
+    bot = App.App()
+    bot.Start()
         
         
         
