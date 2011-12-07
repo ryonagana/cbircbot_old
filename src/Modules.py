@@ -5,6 +5,7 @@ Created on 11/11/2011
 '''
 
 import os, sys, imp
+import Data
 
 
 class IModule:
@@ -29,19 +30,19 @@ class Modules(object):
         
         #checar se a pasta modules existe
             
-        if(os.path.isdir( os.path.abspath(".modules")) == False  ):
+        if(os.path.isdir(Data.MODULES_PATH) == False  ):
             print ".modules not found"
             exit(1)
         else:
             sys.path.append(os.getcwd())
-            self.modulepath =  sys.path.append(os.path.abspath(" .modules"))
+            self.modulepath =  Data.MODULES_PATH
             
             
         
         
         
         for key in mlist:
-            path = os.path.abspath(".modules/{0}.py".format(key)) 
+            path = Data.ApplicationData("{0}.py".format(key))
             inst = self.loadfile(path)
             self.modules.append(inst)
             

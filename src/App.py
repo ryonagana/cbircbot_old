@@ -76,7 +76,8 @@ class App(object):
         self.auth = TwitterAPI.TwitterAuth(self.data.consumer_key, self.data.consumer_secret, self.data.access_key, self.data.access_secret)
         
         if(self.data.consumer_key == ""  or  self.data.consumer_secret == "" or self.data.access_key == ""  or self.data.access_secret == ""):
-            sys.stderr << "Twitter API Not Active:  REASON: need the correct consumer keys and access_tokens"
+            #sys.stderr << "Twitter API Not Active:  REASON: need the correct consumer keys and access_tokens"
+            print "Twitter API not Activated"
         else:
             self.twitter = TwitterAPI.TwitterAPI(self.data.user, self.auth)
             
