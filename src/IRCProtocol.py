@@ -91,7 +91,13 @@ class Client(Connector):
     def JoinChannel(self, channel):
         
         if self.isConnected:
-            self.SendMessage("JOIN " +  channel)
+           
+            chan = self.clientconf.channel.split(",")
+           
+            for  channel in chan:
+                self.SendMessage("JOIN " +  channel)
+                
+            self.isJoined = True
             
             
     def Talk(self, message, channel,  user = None):
@@ -129,12 +135,12 @@ class Client(Connector):
         
     def  UserInput(self, configdata):
         while True:
-            texto = raw_input('BOT CMD >> ')
+            texto = raw_input('--> ')
             if (texto.find):
                 
                 #parse =  texto.split(" ")
                 self.GenericMessage('PRIVMSG', configdata.channel , texto)
-                print "<{0}> {1} ".format(configdata.nick, texto)
+                print "<{0}> {1}  <--".format(configdata.nick, texto)
                 
             
     
